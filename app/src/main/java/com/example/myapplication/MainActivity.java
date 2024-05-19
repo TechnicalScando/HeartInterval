@@ -18,17 +18,26 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                BluetoothDevice device =
-                        intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                String deviceName = device.getName();
-                String deviceAddress = device.getAddress();
-                Toast.makeText(context, "Discovered: " +
-                        deviceName + " [" + deviceAddress + "]",
-                        Toast.LENGTH_SHORT).show();
+            try{
+                if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                    BluetoothDevice device =
+                            intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                    String deviceName = device.getName();
+                    String deviceAddress = device.getAddress();
+                    Toast.makeText(context, "Discovered: " +
+                                    deviceName + " [" + deviceAddress + "]",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Bluetooth permission denied",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }catch (SecurityException e) {
+                Toast.makeText(context, "Security Exception " +
+                        e.getMessage(), Toast.LENGTH_SHORT).show();
             }
+
         }
-    }//Handles bluetooth discovery events
+    };//Handles bluetooth discovery events
 
 
 }
