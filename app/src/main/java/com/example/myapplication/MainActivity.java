@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -69,8 +70,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Method to start the discovery process
+    @SuppressLint("MissingPermission")
     private void startDiscovery(){
-
+        //Create an intentfilter to filter through bluetooth found actions
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        //Register our receiver to the found device events
+        registerReceiver(receiver, filter);
+        //Begin the discovery process
+        bluetoothAdapter.startDiscovery();
     }
 
 }
