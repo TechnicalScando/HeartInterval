@@ -39,5 +39,38 @@ public class MainActivity extends AppCompatActivity {
         }
     };//Handles bluetooth discovery events
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //Set the view to activity.main.xml
+        setContentView(R.layout.activity_main);
+
+        //Get default BluetoothAdapter for the device
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        //Check if the device supports bluetooth
+        if (bluetoothAdapter == null) {
+            //If bluetooth is not supported display a message and then
+            //close the app
+            Toast.makeText(this, "Bluetooth is not available",
+                    Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+        //Check if bluetooth is enabled
+        if (!bluetoothAdapter.isEnabled()){
+            //If it is not enabled request the user to enable it
+            Intent enableBtIntent =
+                    new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        } else {
+            //If bluetooth is enabled start the discovery process
+            startDiscovery();
+        }
+    }
+
+    private void startDiscovery(){
+
+    }
 
 }
